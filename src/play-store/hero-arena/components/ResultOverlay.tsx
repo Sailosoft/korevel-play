@@ -18,41 +18,60 @@ export default function ResultOverlay({
 
   return (
     <div
-      className="absolute inset-0 z-10 flex items-center justify-center rounded-2xl bg-zinc-950/80 p-4 backdrop-blur-sm"
+      className="absolute inset-0 z-10 flex items-center justify-center p-4"
+      style={{
+        backgroundColor: "rgba(6,8,16,0.9)",
+        backdropFilter: "blur(4px)",
+      }}
       role="dialog"
       aria-modal="true"
       aria-label="Duel result"
     >
-      <div className="flex w-full max-w-sm flex-col items-center gap-4 rounded-2xl border border-white/10 bg-zinc-900 p-6 text-center">
+      <div className="ftf-panel flex w-full max-w-sm flex-col items-center gap-4 p-6 text-center">
+        <div className="ftf-divider w-full" />
+
         <span
-          className="h-4 w-4 rounded-full"
+          className="h-5 w-5 rounded-full"
           style={{
-            backgroundColor: winnerCombatant?.hero.color ?? "#a1a1aa",
+            backgroundColor: winnerCombatant?.hero.color ?? "var(--ftf-frost-dim)",
+            boxShadow: `0 0 18px ${winnerCombatant?.hero.color ?? "var(--ftf-frost-dim)"}60`,
           }}
           aria-hidden="true"
         />
+
         <div className="flex flex-col gap-1">
-          <h2 className="text-2xl font-semibold text-zinc-50">{headline}</h2>
-          <p className="text-sm text-zinc-400">
+          <h2
+            className="text-2xl font-bold uppercase tracking-wide"
+            style={{
+              color: "var(--ftf-ice-bright)",
+              textShadow: "0 2px 8px rgba(0,0,0,0.7), 0 0 18px rgba(108,180,238,0.2)",
+            }}
+          >
+            {headline}
+          </h2>
+          <p className="text-sm" style={{ color: "var(--ftf-frost-dim)" }}>
             {winnerCombatant
               ? `Survived with ${Math.max(0, Math.ceil(winnerCombatant.hp))} HP after ${state.round} rounds.`
               : `Both heroes fell in round ${state.round}.`}
           </p>
         </div>
+
+        <div className="ftf-divider w-full" />
+
         <div className="flex w-full flex-col gap-2 sm:flex-row">
           <button
             type="button"
             onClick={onRematch}
-            className="flex-1 rounded-xl bg-indigo-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-300"
+            className="ftf-btn-primary flex-1 rounded-sm px-4 py-2.5 text-sm uppercase tracking-wider"
           >
             Rematch
           </button>
           <button
             type="button"
             onClick={onQuit}
-            className="flex-1 rounded-xl border border-white/15 px-4 py-2.5 text-sm font-semibold text-zinc-200 transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-400"
+            className="ftf-btn flex-1 rounded-sm px-4 py-2.5 text-sm font-bold uppercase tracking-wider"
           >
-            New heroes
+            New Heroes
           </button>
         </div>
       </div>

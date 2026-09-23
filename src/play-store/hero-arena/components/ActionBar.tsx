@@ -2,7 +2,7 @@ import { ACTION_LABELS, getActionAvailability } from "../engine/combat";
 import type { ActionId, CombatState, Side } from "../engine/types";
 
 const BUTTON_ACCENT: Record<ActionId, string> = {
-  attack: "hover:border-zinc-300/60 hover:bg-white/10",
+  attack: "hover:border-red-400/60 hover:bg-red-500/10",
   skill: "hover:border-sky-400/60 hover:bg-sky-500/10",
   ultimate: "hover:border-amber-400/60 hover:bg-amber-500/10",
   defend: "hover:border-emerald-400/60 hover:bg-emerald-500/10",
@@ -53,10 +53,18 @@ export default function ActionBar({
   return (
     <section className="flex flex-col gap-3" aria-label="Actions">
       <div className="flex items-center justify-between">
-        <h2 className="text-sm font-semibold uppercase tracking-wider text-zinc-500">
+        <h2
+          className="ftf-ornament text-xs font-bold uppercase tracking-widest"
+          style={{ color: "var(--ftf-ice)" }}
+        >
           Actions
         </h2>
-        <p className="text-sm text-indigo-300" role="status" aria-live="polite">
+        <p
+          className="text-sm font-semibold"
+          style={{ color: "var(--ftf-ice)" }}
+          role="status"
+          aria-live="polite"
+        >
           {hint}
         </p>
       </div>
@@ -77,14 +85,17 @@ export default function ActionBar({
                     ? hero.ultimate.description
                     : undefined
               }
-              className={`flex min-h-20 flex-col items-start justify-between gap-1 rounded-xl border border-white/10 bg-zinc-900/70 p-3 text-left transition disabled:cursor-not-allowed disabled:opacity-40 ${
+              className={`ftf-btn flex min-h-20 flex-col items-start justify-between gap-1 p-3 text-left ${
                 isDisabled ? "" : BUTTON_ACCENT[entry.action]
               }`}
             >
-              <span className="text-sm font-semibold text-zinc-100">
+              <span
+                className="text-sm font-bold uppercase tracking-wide"
+                style={{ color: "var(--ftf-frost)" }}
+              >
                 {titleFor(entry.action)}
               </span>
-              <span className="text-xs text-zinc-400">
+              <span className="text-xs" style={{ color: "var(--ftf-frost-dim)" }}>
                 {sublabel(
                   entry.action,
                   entry.enabled,

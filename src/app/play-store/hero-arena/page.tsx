@@ -11,16 +11,16 @@ export const metadata: Metadata = {
 export default function HeroArenaPage() {
   return (
     <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-6 px-6 py-10">
-      <nav className="text-sm text-zinc-500">
-        <Link href="/" className="hover:text-zinc-300">
+      <nav className="flex items-center gap-2 text-sm" style={{ color: "var(--ftf-frost-dim)" }}>
+        <Link href="/" className="transition hover:text-[var(--ftf-ice)]">
           Home
         </Link>
-        <span className="mx-2">/</span>
-        <Link href="/play-store" className="hover:text-zinc-300">
+        <span style={{ color: "var(--ftf-steel-border)" }}>/</span>
+        <Link href="/play-store" className="transition hover:text-[var(--ftf-ice)]">
           Play Store
         </Link>
-        <span className="mx-2">/</span>
-        <span className="text-zinc-300">Hero Arena</span>
+        <span style={{ color: "var(--ftf-steel-border)" }}>/</span>
+        <span style={{ color: "var(--ftf-ice)" }}>Hero Arena</span>
       </nav>
 
       <HeroArena />

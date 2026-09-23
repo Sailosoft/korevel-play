@@ -37,28 +37,39 @@ function HeroOption({
       type="button"
       onClick={onSelect}
       aria-pressed={selected}
-      className={`flex flex-col gap-1.5 rounded-xl border p-3 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400 ${
-        selected
-          ? "border-indigo-400 bg-indigo-500/10"
-          : "border-white/10 bg-zinc-900/60 hover:border-white/25 hover:bg-zinc-900"
+      className={`flex flex-col gap-1.5 p-3 text-left transition ${
+        selected ? "ftf-panel-active ftf-panel" : "ftf-panel"
       }`}
     >
       <span className="flex items-center gap-2">
         <span
           className="inline-block h-2.5 w-2.5 shrink-0 rounded-full"
-          style={{ backgroundColor: hero.color }}
+          style={{ backgroundColor: hero.color, boxShadow: `0 0 6px ${hero.color}50` }}
           aria-hidden="true"
         />
-        <span className="truncate text-sm font-semibold text-zinc-100">
+        <span
+          className="truncate text-sm font-bold uppercase tracking-wide"
+          style={{ color: selected ? "var(--ftf-ice-bright)" : "var(--ftf-frost)" }}
+        >
           {hero.name}
         </span>
       </span>
-      <span className="text-xs text-zinc-400">{hero.archetype}</span>
-      <span className="font-mono text-[11px] text-zinc-500">
+      <span
+        className="text-xs font-semibold uppercase tracking-wider"
+        style={{ color: "var(--ftf-frost-dim)" }}
+      >
+        {hero.archetype}
+      </span>
+      <span
+        className="font-mono text-[11px]"
+        style={{ color: "var(--ftf-ice-dim)" }}
+      >
         HP {hero.maxHp} · ATK {hero.atk} · DEF {hero.def} · SPD {hero.spd} · CRIT{" "}
         {Math.round(hero.critChance * 100)}%
       </span>
-      <span className="text-[11px] text-zinc-500">{hero.passive.name}</span>
+      <span className="text-[11px]" style={{ color: "var(--ftf-frost-dim)" }}>
+        {hero.passive.name}
+      </span>
     </button>
   );
 }
@@ -73,8 +84,11 @@ function SidePicker({
   onChange: (id: string) => void;
 }) {
   return (
-    <fieldset className="flex flex-col gap-3 rounded-2xl border border-white/10 bg-zinc-950/40 p-4">
-      <legend className="px-1 text-sm font-semibold uppercase tracking-wider text-zinc-500">
+    <fieldset className="ftf-panel flex flex-col gap-3 p-4">
+      <legend
+        className="px-1 text-xs font-bold uppercase tracking-widest"
+        style={{ color: "var(--ftf-ice)" }}
+      >
         {label}
       </legend>
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
@@ -112,10 +126,17 @@ export default function HeroSelect({
   return (
     <div className="flex flex-col gap-6">
       <header className="flex flex-col gap-2">
-        <h1 className="text-3xl font-semibold tracking-tight text-zinc-50">
-          Hero Arena
+        <h1
+          className="text-3xl font-bold tracking-wide uppercase"
+          style={{
+            color: "var(--ftf-ice-bright)",
+            textShadow: "0 2px 8px rgba(0,0,0,0.7), 0 0 24px rgba(108,180,238,0.15)",
+          }}
+        >
+          ❄ Hero Arena
         </h1>
-        <p className="max-w-2xl text-zinc-400">
+        <div className="ftf-divider" />
+        <p className="max-w-2xl text-sm leading-relaxed" style={{ color: "var(--ftf-frost-dim)" }}>
           Pick a fighter for each side, choose how the opponent behaves, then
           duel round by round. Each round both heroes roll a hidden d20 — the
           higher roll (plus a speed bonus) attacks, and a d6 decides how hard
@@ -125,7 +146,10 @@ export default function HeroSelect({
       </header>
 
       <fieldset className="flex flex-col gap-3">
-        <legend className="text-sm font-semibold uppercase tracking-wider text-zinc-500">
+        <legend
+          className="text-xs font-bold uppercase tracking-widest"
+          style={{ color: "var(--ftf-ice)" }}
+        >
           Mode
         </legend>
         <div className="grid gap-3 sm:grid-cols-2">
@@ -137,16 +161,17 @@ export default function HeroSelect({
                 type="button"
                 onClick={() => setMode(option.id)}
                 aria-pressed={selected}
-                className={`flex flex-col gap-1 rounded-xl border p-4 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400 ${
-                  selected
-                    ? "border-indigo-400 bg-indigo-500/10"
-                    : "border-white/10 bg-zinc-900/60 hover:border-white/25"
+                className={`flex flex-col gap-1 p-4 text-left transition ${
+                  selected ? "ftf-panel-active ftf-panel" : "ftf-panel"
                 }`}
               >
-                <span className="text-sm font-semibold text-zinc-100">
+                <span
+                  className="text-sm font-bold uppercase tracking-wide"
+                  style={{ color: selected ? "var(--ftf-ice-bright)" : "var(--ftf-frost)" }}
+                >
                   {option.label}
                 </span>
-                <span className="text-xs text-zinc-400">
+                <span className="text-xs" style={{ color: "var(--ftf-frost-dim)" }}>
                   {option.description}
                 </span>
               </button>
@@ -169,14 +194,14 @@ export default function HeroSelect({
           type="button"
           onClick={handleStart}
           disabled={!p1 || !p2}
-          className="rounded-xl bg-indigo-500 px-6 py-3 text-sm font-semibold text-white transition hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-300 disabled:opacity-40"
+          className="ftf-btn-primary rounded-sm px-6 py-3 text-sm uppercase tracking-wider"
         >
-          Start duel
+          Start Duel
         </button>
         {p1 && p2 ? (
-          <p className="text-sm text-zinc-400">
-            <span className="text-zinc-200">{p1.name}</span> vs{" "}
-            <span className="text-zinc-200">{p2.name}</span>
+          <p className="text-sm" style={{ color: "var(--ftf-frost-dim)" }}>
+            <span style={{ color: "var(--ftf-ice)" }}>{p1.name}</span> vs{" "}
+            <span style={{ color: "var(--ftf-ice)" }}>{p2.name}</span>
           </p>
         ) : null}
       </div>

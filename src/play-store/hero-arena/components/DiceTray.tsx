@@ -26,23 +26,30 @@ function Die({
         state === "tumbling" ? "dice-tumbling" : ""
       }`}
     >
-      <span className="max-w-20 truncate text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
+      <span
+        className="max-w-20 truncate text-[11px] font-bold uppercase tracking-widest"
+        style={{ color: "var(--ftf-frost-dim)" }}
+      >
         {label}
       </span>
       <div
-        className={`flex h-16 w-16 items-center justify-center rounded-2xl border-2 text-2xl font-bold tabular-nums transition-transform duration-200 ${
-          state === "winner" ? "scale-110 bg-indigo-500/15" : "bg-zinc-950/70"
+        className={`flex h-16 w-16 items-center justify-center border-2 text-2xl font-bold tabular-nums transition-transform duration-200 ${
+          state === "winner" ? "scale-110" : ""
         }`}
         style={{
-          borderColor: shown ? color : "#3f3f46",
-          color: shown ? color : "#71717a",
+          borderColor: shown ? color : "var(--ftf-steel-border)",
+          backgroundColor: state === "winner" ? "rgba(108,180,238,0.1)" : "var(--ftf-steel-dark)",
+          color: shown ? color : "var(--ftf-frost-dim)",
+          boxShadow: state === "winner"
+            ? `0 0 14px ${color}40, inset 0 0 8px ${color}20`
+            : "inset 0 1px 4px rgba(0,0,0,0.5)",
         }}
         role="img"
         aria-label={shown ? `${label} rolled ${value}` : `${label} die hidden`}
       >
         {shown ? value : "?"}
       </div>
-      <span className="font-mono text-[11px] text-zinc-500">
+      <span className="font-mono text-[11px]" style={{ color: "var(--ftf-frost-dim)" }}>
         {bonus > 0 ? `+${bonus} spd` : "spd +0"}
       </span>
     </div>
@@ -79,12 +86,17 @@ export default function DiceTray({
     : null;
 
   return (
-    <section className="flex flex-col gap-3 rounded-2xl border border-white/10 bg-zinc-900/70 p-4">
+    <section className="ftf-panel ftf-frost-shimmer flex flex-col gap-3 p-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-sm font-semibold uppercase tracking-wider text-zinc-500">
-          Hidden dice
+        <h2
+          className="ftf-ornament text-xs font-bold uppercase tracking-widest"
+          style={{ color: "var(--ftf-ice)" }}
+        >
+          Hidden Dice
         </h2>
-        <span className="text-xs text-zinc-500">d{INITIATIVE_FACES} + speed</span>
+        <span className="text-xs font-semibold" style={{ color: "var(--ftf-frost-dim)" }}>
+          d{INITIATIVE_FACES} + speed
+        </span>
       </div>
 
       <div className="flex items-center justify-center gap-6">
@@ -95,7 +107,10 @@ export default function DiceTray({
           bonus={speedBonus(state.p1)}
           state={dieState("p1")}
         />
-        <span className="text-xs font-semibold uppercase tracking-wider text-zinc-600">
+        <span
+          className="text-xs font-bold uppercase tracking-widest"
+          style={{ color: "var(--ftf-ice-dim)" }}
+        >
           vs
         </span>
         <Die
@@ -113,16 +128,16 @@ export default function DiceTray({
         aria-live="polite"
       >
         {phase === "rolling" ? (
-          <span className="text-zinc-400">
+          <span style={{ color: "var(--ftf-frost-dim)" }}>
             Both heroes roll in secret — the highest total acts.
           </span>
         ) : initiative && !revealing ? (
-          <span className="text-indigo-300">
+          <span style={{ color: "var(--ftf-ice)" }}>
             {initiative.p1Total} vs {initiative.p2Total} — {winnerName} acts and
             rolls a d6 for damage.
           </span>
         ) : (
-          <span className="text-zinc-500">Revealing…</span>
+          <span style={{ color: "var(--ftf-frost-dim)" }}>Revealing…</span>
         )}
       </p>
 
@@ -131,14 +146,14 @@ export default function DiceTray({
           type="button"
           onClick={onRoll}
           disabled={disabled}
-          className="rounded-xl bg-indigo-500 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-300 disabled:opacity-40"
+          className="ftf-btn-primary rounded-sm px-5 py-2.5 text-sm uppercase tracking-wider"
         >
-          Roll the dice
+          Roll the Dice
         </button>
       ) : null}
 
       {state.lastAction && state.lastAction.damageDie > 0 ? (
-        <p className="text-center font-mono text-xs text-zinc-500">
+        <p className="text-center font-mono text-xs" style={{ color: "var(--ftf-frost-dim)" }}>
           Last damage die: {state.lastAction.damageDie} (x
           {state.lastAction.damageMultiplier.toFixed(2)})
         </p>

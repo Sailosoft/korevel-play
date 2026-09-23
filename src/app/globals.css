@@ -1,8 +1,21 @@
 @import "tailwindcss";
 
 :root {
-  --background: #09090b;
-  --foreground: #f4f4f5;
+  --background: #060810;
+  --foreground: #c0d0e8;
+  --ftf-ice: #6cb4ee;
+  --ftf-ice-bright: #a0d4ff;
+  --ftf-ice-dim: #3a7cc0;
+  --ftf-steel: #1c2438;
+  --ftf-steel-light: #283448;
+  --ftf-steel-dark: #0e1420;
+  --ftf-steel-border: #2e3e58;
+  --ftf-frost: #c0ddf8;
+  --ftf-frost-dim: #7898b8;
+  --ftf-red: #cc3030;
+  --ftf-green: #30a830;
+  --ftf-blue: #3070e8;
+  --ftf-blue-bright: #5090ff;
 }
 
 @theme inline {
@@ -18,6 +31,144 @@ body {
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
 }
 
+.ftf-panel {
+  background: linear-gradient(
+    180deg,
+    var(--ftf-steel-light) 0%,
+    var(--ftf-steel) 35%,
+    var(--ftf-steel-dark) 100%
+  );
+  border: 1px solid var(--ftf-steel-border);
+  box-shadow:
+    inset 0 1px 0 rgba(108, 180, 238, 0.06),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.4),
+    0 2px 10px rgba(0, 0, 0, 0.6);
+  position: relative;
+}
+
+.ftf-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(108, 180, 238, 0.04);
+  pointer-events: none;
+}
+
+.ftf-panel-active {
+  border-color: var(--ftf-ice-dim);
+  box-shadow:
+    inset 0 1px 0 rgba(108, 180, 238, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.4),
+    0 0 14px rgba(108, 180, 238, 0.15),
+    0 2px 10px rgba(0, 0, 0, 0.6);
+}
+
+.ftf-panel-active::before {
+  border-color: rgba(108, 180, 238, 0.08);
+}
+
+.ftf-btn {
+  background: linear-gradient(
+    180deg,
+    var(--ftf-steel-light) 0%,
+    var(--ftf-steel) 50%,
+    var(--ftf-steel-dark) 100%
+  );
+  border: 1px solid var(--ftf-steel-border);
+  color: var(--ftf-frost);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  transition: all 0.15s ease;
+}
+
+.ftf-btn:hover:not(:disabled) {
+  border-color: var(--ftf-ice-dim);
+  box-shadow: 0 0 10px rgba(108, 180, 238, 0.2);
+  background: linear-gradient(
+    180deg,
+    #344058 0%,
+    var(--ftf-steel-light) 50%,
+    var(--ftf-steel) 100%
+  );
+}
+
+.ftf-btn:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.ftf-btn-primary {
+  background: linear-gradient(
+    180deg,
+    #3a7cc0 0%,
+    #2a5c98 50%,
+    #1a3c68 100%
+  );
+  border: 1px solid var(--ftf-ice);
+  color: #e8f4ff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+  font-weight: 700;
+}
+
+.ftf-btn-primary:hover:not(:disabled) {
+  border-color: var(--ftf-ice-bright);
+  box-shadow: 0 0 14px rgba(108, 180, 238, 0.35);
+  background: linear-gradient(
+    180deg,
+    #4a8cd0 0%,
+    #3a6ca8 50%,
+    #2a4c78 100%
+  );
+}
+
+.ftf-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.ftf-bar-frame {
+  background: #080c16;
+  border: 1px solid var(--ftf-steel-border);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.7);
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.ftf-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--ftf-steel-border) 15%,
+    var(--ftf-ice-dim) 50%,
+    var(--ftf-steel-border) 85%,
+    transparent 100%
+  );
+  opacity: 0.45;
+}
+
+.ftf-ornament {
+  position: relative;
+}
+
+.ftf-ornament::before,
+.ftf-ornament::after {
+  content: "◆";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ftf-ice-dim);
+  font-size: 7px;
+  opacity: 0.6;
+}
+
+.ftf-ornament::before {
+  left: 8px;
+}
+
+.ftf-ornament::after {
+  right: 8px;
+}
+
 @keyframes dice-tumble {
   0%,
   100% {
@@ -30,4 +181,36 @@ body {
 
 .dice-tumbling {
   animation: dice-tumble 0.35s ease-in-out infinite;
+}
+
+@keyframes ftf-frost-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 6px rgba(108, 180, 238, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 14px rgba(108, 180, 238, 0.3);
+  }
+}
+
+@keyframes ftf-frost-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.ftf-frost-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(108, 180, 238, 0.04) 25%,
+    rgba(160, 212, 255, 0.06) 50%,
+    rgba(108, 180, 238, 0.04) 75%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: ftf-frost-shimmer 6s ease-in-out infinite;
 }

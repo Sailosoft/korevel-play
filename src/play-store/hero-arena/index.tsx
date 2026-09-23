@@ -13,12 +13,12 @@ import { useDuel } from "./state/useDuel";
 const REVEAL_MS = 750;
 
 const LOG_STYLES: Record<LogKind, string> = {
-  info: "text-zinc-400",
-  damage: "text-rose-300",
-  heal: "text-emerald-300",
-  status: "text-amber-300",
+  info: "text-[var(--ftf-frost-dim)]",
+  damage: "text-red-400",
+  heal: "text-emerald-400",
+  status: "text-amber-400",
   crit: "font-semibold text-orange-300",
-  system: "text-indigo-300",
+  system: "text-[var(--ftf-ice)]",
 };
 
 function BattleLog({ log }: { log: LogEntry[] }) {
@@ -34,17 +34,23 @@ function BattleLog({ log }: { log: LogEntry[] }) {
 
   return (
     <section className="flex flex-col gap-2">
-      <h2 className="text-sm font-semibold uppercase tracking-wider text-zinc-500">
-        Battle log
+      <h2
+        className="ftf-ornament text-xs font-bold uppercase tracking-widest"
+        style={{ color: "var(--ftf-ice)" }}
+      >
+        Battle Chronicle
       </h2>
       <div
         ref={container}
-        className="h-44 overflow-y-auto rounded-xl border border-white/10 bg-zinc-950/60 p-3"
+        className="ftf-panel h-44 overflow-y-auto p-3"
       >
         <ol className="flex flex-col gap-1 text-xs leading-5">
           {log.map((entry) => (
             <li key={entry.id} className={LOG_STYLES[entry.kind]}>
-              <span className="mr-2 font-mono text-[10px] text-zinc-600">
+              <span
+                className="mr-2 font-mono text-[10px]"
+                style={{ color: "var(--ftf-ice-dim)" }}
+              >
                 R{entry.round}
               </span>
               {entry.text}
@@ -108,22 +114,40 @@ export default function HeroArena() {
 
   return (
     <div className="relative flex flex-col gap-5">
-      <header className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-3">
-          <h1 className="text-2xl font-semibold tracking-tight text-zinc-50">
-            Hero Arena
+      <header className="ftf-panel ftf-frost-shimmer flex flex-wrap items-center justify-between gap-3 px-5 py-3">
+        <div className="flex items-center gap-4">
+          <h1
+            className="text-xl font-bold tracking-wide uppercase"
+            style={{
+              color: "var(--ftf-ice-bright)",
+              textShadow: "0 1px 4px rgba(0,0,0,0.7), 0 0 14px rgba(108,180,238,0.2)",
+            }}
+          >
+            ❄ Hero Arena
           </h1>
-          <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-zinc-400">
+          <span
+            className="rounded-sm border px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider"
+            style={{
+              borderColor: "var(--ftf-ice-dim)",
+              backgroundColor: "rgba(108,180,238,0.08)",
+              color: "var(--ftf-ice)",
+            }}
+          >
             {setup.mode === "ai" ? "Vs AI" : "Control Both"}
           </span>
-          <span className="text-xs text-zinc-500">Round {state.round}</span>
+          <span
+            className="text-xs font-semibold"
+            style={{ color: "var(--ftf-frost-dim)" }}
+          >
+            Round {state.round}
+          </span>
         </div>
         <button
           type="button"
           onClick={quit}
-          className="rounded-lg border border-white/15 px-3 py-1.5 text-sm text-zinc-300 transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-400"
+          className="ftf-btn rounded-sm px-3 py-1.5 text-xs font-bold uppercase tracking-wider"
         >
-          New heroes
+          New Heroes
         </button>
       </header>
 
@@ -160,7 +184,8 @@ export default function HeroArena() {
             />
           ) : (
             <p
-              className="text-sm text-indigo-300"
+              className="text-sm font-semibold"
+              style={{ color: "var(--ftf-ice)" }}
               role="status"
               aria-live="polite"
             >
